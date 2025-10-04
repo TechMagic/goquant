@@ -7,7 +7,7 @@ import (
 	"goquant/internal/data"
 )
 
-// 简单双均线交叉策略
+// Simple dual moving average crossover strategy
 type MACrossover struct {
 	fast int
 	slow int

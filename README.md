@@ -101,17 +101,19 @@ Download free historical data from Yahoo Finance :
 
 ## 🧩 Architecture Overview
 
+```tree
 goquant/
 ├── cmd/goquantlab/      # CLI entry point
 ├── internal/
-│   ├── data/                      # CSV data loader
-│   ├── strategy/                # Trading strategies (e.g., MA Crossover)
-│   ├── backtest/               # Backtesting engine
-│   ├── metrics/                 # Performance metrics (Sharpe, Drawdown, etc.)
-│   └── utils/                       # Config loader
-├── data/                            # Place your CSV files here
-├── configs/                       # Example config
-└── go.mod                       # Go module
+│   ├── data/            # CSV data loader
+│   ├── strategy/        # Trading strategies (e.g., MA Crossover)
+│   ├── backtest/        # Backtesting engine
+│   ├── metrics/         # Performance metrics (Sharpe, Drawdown, etc.)
+│   └── utils/           # Config loader
+├── data/                # Place your CSV files here
+├── configs/             # Example config
+└── go.mod               # Go module
+```
 
 - Strategy Interface: Easy to add new strategies (implement OnBar)
 - Modular Design: Swap data sources, metrics, or position sizing without touching core logic

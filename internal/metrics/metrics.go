@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-// Metrics 计算年化收益、波动、夏普、最大回撤
+// Metrics calculates annualized return, volatility, Sharpe ratio, and maximum drawdown
 type Metrics struct {
 	AnnualReturn float64
 	AnnualVol    float64
@@ -12,7 +12,7 @@ type Metrics struct {
 	MaxDrawdown  float64
 }
 
-// FromEquitySeries 传入每日/每周期的权益序列，periodsPerYear（例如 252）
+// FromEquitySeries takes a daily/periodic equity series and periodsPerYear (e.g., 252)
 func FromEquitySeries(equity []float64, periodsPerYear float64) Metrics {
 	n := len(equity)
 	if n < 2 {

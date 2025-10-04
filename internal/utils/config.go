@@ -6,7 +6,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// Config 为今后扩展保留（当前简单示例）
+// Config is reserved for future extensions (currently a simple example)
 type Config struct {
 	DataDir string `yaml:"data_dir"`
 }

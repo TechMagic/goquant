@@ -29,7 +29,7 @@ func main() {
 	}
 	_ = cfg // currently not used extensively but kept for extension
 
-	provider := data.NewCSVDataProvider(cfg.DataDir) // ✅ 使用 cfg.DataDir
+	provider := data.NewCSVDataProvider(cfg.DataDir) // ✅ use cfg.DataDir
 
 	var st strategy.Strategy
 	st = strategy.NewMACrossover(*maFast, *maSlow)
@@ -43,7 +43,7 @@ func main() {
 		e, _ = time.Parse("2006-01-02", *end)
 	}
 
-	bars, err := provider.LoadBars(*symbol, s, e) // ✅ 传入 time.Time
+	bars, err := provider.LoadBars(*symbol, s, e) // ✅ introduce time.Time
 
 	if err != nil {
 		log.Fatalf("load bars: %v", err)

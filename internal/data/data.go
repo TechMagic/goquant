@@ -22,13 +22,13 @@ type CSVDataProvider struct {
 	basePath string
 }
 
-// 注意：方法名改为 NewCSVDataProvider（更清晰），结构体名也同步
+// NewCSVDataProvider creates a new CSVDataProvider. basePath is the directory where data files are located.
 func NewCSVDataProvider(basePath string) *CSVDataProvider {
 	return &CSVDataProvider{basePath: basePath}
 }
 
-// LoadBars 加载指定 symbol 的数据，并按 start/end 时间范围过滤
-// 如果 start 或 end 为零值（time.Time{}），则不过滤对应边界
+// LoadBars loads data for the specified symbol and filters by the start/end time range.
+// If start or end is the zero value (time.Time{}), the corresponding boundary is not filtered.
 func (p *CSVDataProvider) LoadBars(symbol string, start, end time.Time) ([]Bar, error) {
 	path := fmt.Sprintf("%s/%s.csv", p.basePath, symbol)
 	f, err := os.Open(path)
@@ -47,14 +47,14 @@ func (p *CSVDataProvider) LoadBars(symbol string, start, end time.Time) ([]Bar, 
 		return nil, fmt.Errorf("csv has no data rows")
 	}
 
-	// === 新增：解析表头 ===
+	// === New: parse header ===
 	header := rows[0]
 	colIndex := make(map[string]int)
 	for i, name := range header {
 		colIndex[name] = i
 	}
 
-	// 检查必要列是否存在
+	// Check if required columns exist
 	requiredCols := []string{"Date", "Open", "High", "Low", "Close", "Volume"}
 	for _, col := range requiredCols {
 		if _, exists := colIndex[col]; !exists {
@@ -63,13 +63,13 @@ func (p *CSVDataProvider) LoadBars(symbol string, start, end time.Time) ([]Bar, 
 	}
 
 	var allBars []Bar
-	for i := 1; i < len(rows); i++ { // 从第2行开始（跳过表头）
+	for i := 1; i < len(rows); i++ { // Start from the second row (skip header)
 		row := rows[i]
 		if len(row) == 0 {
 			continue
 		}
 
-		// === 按列名读取，不再依赖固定位置 ===
+		// === Read by column name, no longer rely on fixed position ===
 		dateStr := row[colIndex["Date"]]
 		openStr := row[colIndex["Open"]]
 		highStr := row[colIndex["High"]]
@@ -117,7 +117,7 @@ func (p *CSVDataProvider) LoadBars(symbol string, start, end time.Time) ([]Bar, 
 		})
 	}
 
-	// === 时间过滤（保持不变）===
+	// === Time filtering (unchanged) ===
 	var filtered []Bar
 	for _, bar := range allBars {
 		if !start.IsZero() && bar.Date.Before(start) {

@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Trade 记录一次交易
+// Trade records a single trade
 type Trade struct {
 	Time      time.Time // wrapper below: but to avoid cycles, we'll use string in printing
 	Side      string    // "BUY" / "SELL"
@@ -17,14 +17,14 @@ type Trade struct {
 	Position  float64
 }
 
-// BacktestReports 返回回测结果
+// BacktestReports returns the backtest results
 type BacktestReports struct {
 	Trades      []Trade
 	EquityCurve []float64
 	FinalEquity float64
 }
 
-// Engine 简单逐日回测引擎（仅做示范，不含手续费/slippage）
+// Engine is a simple daily backtesting engine (for demonstration only, without fees/slippage)
 type Engine struct {
 	Initial float64
 }
@@ -37,14 +37,14 @@ func (e *Engine) Run(bars []data.Bar, strat strategy.Strategy) (*BacktestReports
 	}
 
 	cash := e.Initial
-	position := 0.0 // 持仓数量（单位: 合约数量或资产份额）
+	position := 0.0 // Position size (units: contract quantity or asset shares)
 	var trades []Trade
 	equity := make([]float64, 0, len(bars))
 
 	for _, b := range bars {
 		sig := strat.OnBar(b)
 		price := b.Close
-		// 简单逻辑：持仓或空仓，两种状态
+		// Simple logic: two states - holding a position or not holding a position
 		if sig == 1 && position == 0.0 {
 			// buy with all cash
 			qty := cash / price
@@ -69,7 +69,7 @@ func (e *Engine) Run(bars []data.Bar, strat strategy.Strategy) (*BacktestReports
 
 func makeTrade(b data.Bar, side string, price, qty, cash, pos float64) Trade {
 	return Trade{
-		Time:      b.Date, // ← 改为 b.Date
+		Time:      b.Date,
 		Side:      side,
 		Price:     price,
 		Quantity:  qty,
