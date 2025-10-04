@@ -1,0 +1,43 @@
+# === Go compiled  ===
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+
+# === Go tool implemented ===
+/go.sum
+
+# === local dev temp files ===
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === quant data related ===
+# 
+data/*.csv
+# keep data/ folder
+!data/.gitkeep
+
+# === config files ===
+# keep configs/ folder
+# configs/*.yaml
+# configs/*.yml
+
+# === others ===
+tmp/
+temp/
+.cache/
+tmp.md
+*.py
+*.ipynb
+
+*.go.bck0
+data/data-delete/
+structure.md
